@@ -55,14 +55,28 @@ extern int yydebug;
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
     T_GET = 258,                   /* T_GET  */
-    T_Host = 259                   /* T_Host  */
+    T_Host = 259,                  /* T_Host  */
+    T_HTTP = 260,                  /* T_HTTP  */
+    T_SLASH = 261,                 /* T_SLASH  */
+    T_REQUEST_URI = 262,           /* T_REQUEST_URI  */
+    T_DECIMAL = 263                /* T_DECIMAL  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+union YYSTYPE
+{
+#line 12 "parser.y"
+
+    double decimal;
+    char* string;
+
+#line 77 "parser.tab.h"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

@@ -111,10 +111,16 @@ enum yysymbol_kind_t
   YYSYMBOL_YYUNDEF = 2,                    /* "invalid token"  */
   YYSYMBOL_T_GET = 3,                      /* T_GET  */
   YYSYMBOL_T_Host = 4,                     /* T_Host  */
-  YYSYMBOL_YYACCEPT = 5,                   /* $accept  */
-  YYSYMBOL_request = 6,                    /* request  */
-  YYSYMBOL_get = 7,                        /* get  */
-  YYSYMBOL_host = 8                        /* host  */
+  YYSYMBOL_T_HTTP = 5,                     /* T_HTTP  */
+  YYSYMBOL_T_SLASH = 6,                    /* T_SLASH  */
+  YYSYMBOL_T_REQUEST_URI = 7,              /* T_REQUEST_URI  */
+  YYSYMBOL_T_DECIMAL = 8,                  /* T_DECIMAL  */
+  YYSYMBOL_YYACCEPT = 9,                   /* $accept  */
+  YYSYMBOL_request = 10,                   /* request  */
+  YYSYMBOL_get = 11,                       /* get  */
+  YYSYMBOL_12_request_uri = 12,            /* request-uri  */
+  YYSYMBOL_http = 13,                      /* http  */
+  YYSYMBOL_version = 14                    /* version  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -442,19 +448,19 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  4
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   2
+#define YYLAST   4
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  5
+#define YYNTOKENS  9
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  4
+#define YYNNTS  6
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  4
+#define YYNRULES  6
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  7
+#define YYNSTATES  11
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   259
+#define YYMAXUTOK   263
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -493,14 +499,15 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     1,     2,     3,     4
+       2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
+       5,     6,     7,     8
 };
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    17,    17,    24,    28
+       0,    23,    23,    30,    34,    50,    56
 };
 #endif
 
@@ -517,7 +524,8 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
 static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "T_GET", "T_Host",
-  "$accept", "request", "get", "host", YY_NULLPTR
+  "T_HTTP", "T_SLASH", "T_REQUEST_URI", "T_DECIMAL", "$accept", "request",
+  "get", "request-uri", "http", "version", YY_NULLPTR
 };
 
 static const char *
@@ -527,7 +535,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-4)
+#define YYPACT_NINF (-6)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -541,7 +549,8 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -3,    -4,     1,    -2,    -4,    -4,    -4
+      -3,    -6,     1,    -5,    -6,    -6,    -2,    -6,    -4,    -6,
+      -6
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -549,19 +558,20 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     3,     0,     0,     1,     4,     2
+       0,     3,     0,     0,     1,     4,     0,     5,     0,     6,
+       2
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -4,    -4,    -4,    -4
+      -6,    -6,    -6,    -6,    -6,    -6
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     2,     3,     6
+       0,     2,     3,     6,     8,    10
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -569,31 +579,32 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       1,     4,     5
+       1,     4,     5,     7,     9
 };
 
 static const yytype_int8 yycheck[] =
 {
-       3,     0,     4
+       3,     0,     7,     5,     8
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,     6,     7,     0,     4,     8
+       0,     3,    10,    11,     0,     7,    12,     5,    13,     8,
+      14
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,     5,     6,     7,     8
+       0,     9,    10,    11,    12,    13,    14
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     2,     1,     1
+       0,     2,     4,     1,     1,     1,     1
 };
 
 
@@ -1056,28 +1067,46 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 2: /* request: get host  */
-#line 18 "parser.y"
+  case 2: /* request: get request-uri http version  */
+#line 24 "parser.y"
     {
-        printf("Parsed successfully: GET followed by Host\n");
+        printf("Parsed successfully: GET followed by HTTP and version\n");
     }
-#line 1065 "parser.tab.c"
+#line 1076 "parser.tab.c"
     break;
 
   case 3: /* get: T_GET  */
-#line 24 "parser.y"
+#line 30 "parser.y"
           { printf("Found a GET\n"); }
-#line 1071 "parser.tab.c"
+#line 1082 "parser.tab.c"
     break;
 
-  case 4: /* host: T_Host  */
-#line 28 "parser.y"
-           { printf("Found a Host\n"); }
-#line 1077 "parser.tab.c"
+  case 4: /* request-uri: T_REQUEST_URI  */
+#line 34 "parser.y"
+                  {
+        printf("Found a request uri: %s\n", yylval.string);
+    }
+#line 1090 "parser.tab.c"
+    break;
+
+  case 5: /* http: T_HTTP  */
+#line 50 "parser.y"
+           {
+        printf("Found http\n");
+    }
+#line 1098 "parser.tab.c"
+    break;
+
+  case 6: /* version: T_DECIMAL  */
+#line 56 "parser.y"
+              {
+        printf("Found version: %.1f\n", yylval.decimal);
+    }
+#line 1106 "parser.tab.c"
     break;
 
 
-#line 1081 "parser.tab.c"
+#line 1110 "parser.tab.c"
 
       default: break;
     }
@@ -1270,7 +1299,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 31 "parser.y"
+#line 61 "parser.y"
 
 
 int main(int argc, char** argv) {

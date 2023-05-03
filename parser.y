@@ -9,14 +9,20 @@ extern FILE* yyin;
 void yyerror(const char* s);
 %}
 
-%token T_GET T_Host
+%union {
+    double decimal;
+    char* string;
+}
+
+%token T_GET T_Host T_HTTP T_SLASH T_REQUEST_URI
+%token <decimal> T_DECIMAL
 
 %%
 
 request:
-    get host
+    get request-uri http version
     {
-        printf("Parsed successfully: GET followed by Host\n");
+        printf("Parsed successfully: GET followed by HTTP and version\n");
     }
 ;
 
@@ -24,8 +30,32 @@ get:
     T_GET { printf("Found a GET\n"); }
 ;
 
+request-uri:
+    T_REQUEST_URI {
+        printf("Found a request uri: %s\n", yylval.string);
+    }
+;
+
 host:
     T_Host { printf("Found a Host\n"); }
+;
+
+slash:
+    T_SLASH {
+        printf("Found a slash\n");
+    }
+;
+
+http: 
+    T_HTTP {
+        printf("Found http\n");
+    }
+;
+
+version:
+    T_DECIMAL {
+        printf("Found version: %.1f\n", yylval.decimal);
+    }
 ;
 
 %%
