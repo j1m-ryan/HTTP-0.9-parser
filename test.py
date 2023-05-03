@@ -45,6 +45,7 @@ if __name__ == "__main__":
 
     if all_tests_passed:
         print("All tests passed!")
+        exit(1)  # test failure of CI
     else:
         print("Some tests failed. Please check the output above.")
         exit(1)
