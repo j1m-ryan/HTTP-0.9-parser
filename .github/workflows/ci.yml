@@ -1,0 +1,27 @@
+name: Test Parser
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y flex bison build-essential
+
+      - name: Build
+        run: |
+          make
+
+      - name: Run tests
+        run: |
+          python test.py
