@@ -7,22 +7,23 @@ extern int yyparse();
 extern FILE* yyin;
 
 void yyerror(const char* s);
+
+int syntax_error = 0;
 %}
 
 %union {
-    double decimal;
     char* string;
 }
 
-%token T_GET T_Host T_HTTP T_SLASH T_REQUEST_URI
+%token T_GET T_REQUEST_URI T_NEWLINE T_SPACE
 %token <decimal> T_DECIMAL
 
 %%
 
 request:
-    get request-uri http version
+    get T_SPACE request-uri T_NEWLINE
     {
-        printf("Parsed successfully: GET followed by HTTP and version\n");
+        printf("Parsed successfully:\n");
     }
 ;
 
@@ -33,28 +34,6 @@ get:
 request-uri:
     T_REQUEST_URI {
         printf("Found a request uri: %s\n", yylval.string);
-    }
-;
-
-host:
-    T_Host { printf("Found a Host\n"); }
-;
-
-slash:
-    T_SLASH {
-        printf("Found a slash\n");
-    }
-;
-
-http: 
-    T_HTTP {
-        printf("Found http\n");
-    }
-;
-
-version:
-    T_DECIMAL {
-        printf("Found version: %.1f\n", yylval.decimal);
     }
 ;
 
@@ -76,9 +55,10 @@ int main(int argc, char** argv) {
     yyparse();
     fclose(inputFile);
 
-    return 0;
+    return syntax_error;
 }
 
 void yyerror(const char* s) {
     printf("Error: %s\n", s);
+    syntax_error = 1;
 }

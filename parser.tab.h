@@ -55,11 +55,10 @@ extern int yydebug;
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
     T_GET = 258,                   /* T_GET  */
-    T_Host = 259,                  /* T_Host  */
-    T_HTTP = 260,                  /* T_HTTP  */
-    T_SLASH = 261,                 /* T_SLASH  */
-    T_REQUEST_URI = 262,           /* T_REQUEST_URI  */
-    T_DECIMAL = 263                /* T_DECIMAL  */
+    T_REQUEST_URI = 259,           /* T_REQUEST_URI  */
+    T_NEWLINE = 260,               /* T_NEWLINE  */
+    T_SPACE = 261,                 /* T_SPACE  */
+    T_DECIMAL = 262                /* T_DECIMAL  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -68,12 +67,11 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 12 "parser.y"
+#line 14 "parser.y"
 
-    double decimal;
     char* string;
 
-#line 77 "parser.tab.h"
+#line 75 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

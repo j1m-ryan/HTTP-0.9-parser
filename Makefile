@@ -3,7 +3,7 @@ CFLAGS = -Wall
 BISON = bison
 FLEX = flex
 LIBS = -lfl
-OUTPUT = program
+OUTPUT = http09_parser
 
 all: $(OUTPUT)
 
